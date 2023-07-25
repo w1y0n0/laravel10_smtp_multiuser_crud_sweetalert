@@ -34,4 +34,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa');
     Route::get('/user-management', [UserManagementController::class, 'index'])->name('user.management');
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
