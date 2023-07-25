@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,4 +16,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'frontend.index');
+Route::middleware(['guest'])->group(function () {
+    Route::view('/', 'frontend.index');
+    Route::get('/sesi', [AuthController::class, 'index'])->name('auth'); // {{ route('auth) }}
+    Route::post('/sesi', [AuthController::class, 'login']);
+    Route::get('/reg', [AuthController::class, 'create'])->name('registrasi');
+    Route::post('/reg', [AuthController::class, 'register']);
+    Route::get('/verify/{verify_key}', [AuthController::class, 'verify']);
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::redirect('/home', '/user'); // redirect dari '/home' jadi '/user'
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin')->middleware('aksesUser:admin');
+    Route::get('/user', [UserController::class, 'index'])->name('user')->middleware('aksesUser:user');
+});
