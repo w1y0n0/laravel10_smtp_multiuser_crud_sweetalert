@@ -33,6 +33,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('user')->middleware('aksesUser:user');
 
     Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa');
+    Route::get('/mahasiswa/tambah', [MahasiswaController::class, 'tambah']);
+    Route::get('/mahasiswa/edit/{id}', [MahasiswaController::class, 'edit']);
+    Route::post('/mahasiswa/hapus/{id}', [MahasiswaController::class, 'hapus']);
+
     Route::get('/user-management', [UserManagementController::class, 'index'])->name('user.management');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
