@@ -7,7 +7,7 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="/admin">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         </li>
@@ -112,7 +112,7 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="/user">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         </li>
@@ -226,7 +226,30 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                <h6 class="m-0 font-weight-bold text-primary mb-4">DataTables Example</h6>
+                {{-- new --}}
+                <a href="/mahasiswa/tambah" class="btn-sm btn-primary text-decoration-none">Tambah data</a>
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $item)
+                                <li>{{ $item }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if (Session::has('success'))
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire(
+                                'Sukses',
+                                '{{ Session::get('success') }}',
+                                'success'
+                            );
+                        });
+                    </script>
+                @endif
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -263,7 +286,8 @@
                                         <a href="/mahasiswa/edit/{{ $item->id }}"
                                             class="btn btn-sm btn-warning text-decoration-none">Edit</a>
                                         | <form onsubmit="return confirmHapus(event)"
-                                            action="/mahasiswa/hapus/{{ $item->id }}" class="d-inline">
+                                            action="/mahasiswa/hapus/{{ $item->id }}" method="POST"
+                                            class="d-inline">
                                             @csrf
                                             <button type="submit"
                                                 class="btn btn-sm btn-danger text-decoration-none">Hapus</button>

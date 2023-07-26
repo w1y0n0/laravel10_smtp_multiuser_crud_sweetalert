@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\UproleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Route;
@@ -40,4 +41,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user-management', [UserManagementController::class, 'index'])->name('user.management');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // new
+    Route::post('/tambahdama', [MahasiswaController::class, 'create']);
+    Route::post('/editdama', [MahasiswaController::class, 'change']);
+
+    Route::get('/tambahuser', [UserManagementController::class, 'tambah']);
+    Route::get('/edituc/{id}', [UserManagementController::class, 'edit']);
+    Route::post('/hapusuc/{id}', [UserManagementController::class, 'hapus']);
+    Route::post('/tambahuser', [UserManagementController::class, 'create']);
+    Route::post('/edituc', [UserManagementController::class, 'change']);
+
+    Route::post('/uprole/{id}', [UproleController::class, 'index']);
 });
